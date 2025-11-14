@@ -448,6 +448,8 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
             self.sections = sections
             self.ids = ids
             self.mainBackgroundColor = mainBackgroundColor
+            
+            print("[*ExyteChat*] sections: \(self.paginationHandler), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
             self.paginationTargetIndexPath = paginationTargetIndexPath
             self.listSwipeActions = listSwipeActions
             self.keyboardDismissMode = keyboardDismissMode
@@ -601,6 +603,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
         }
 
         func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+            print("[*ExyteChat*] paginationHandler: \(self.paginationHandler), paginationTargetIndexPath: \(self.paginationTargetIndexPath), indexPath: \(indexPath)")
             guard let paginationHandler = self.paginationHandler, let paginationTargetIndexPath, indexPath == paginationTargetIndexPath else {
                 return
             }
