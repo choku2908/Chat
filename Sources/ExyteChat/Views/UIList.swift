@@ -103,6 +103,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
 
     @MainActor
     private func updateIfNeeded(coordinator: Coordinator, tableView: UITableView) async {
+        print("[*ExyteChat*] UIList updateIfNeeded called. sections: \(sections), coordinator.sections: \(coordinator.sections)")
         if coordinator.sections == sections {
             return
         }
@@ -449,7 +450,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
             self.ids = ids
             self.mainBackgroundColor = mainBackgroundColor
             
-            print("[*ExyteChat*] sections: \(self.paginationHandler), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
+            print("[*ExyteChat*] sections: \(self.sections), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
             self.paginationTargetIndexPath = paginationTargetIndexPath
             self.listSwipeActions = listSwipeActions
             self.keyboardDismissMode = keyboardDismissMode
