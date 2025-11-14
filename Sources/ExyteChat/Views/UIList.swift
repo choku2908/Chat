@@ -132,6 +132,12 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
 //        }
         tableView.reloadData()
         coordinator.sections = sections
+        
+        if isScrolledToBottom || isScrolledToTop {
+            if !isScrollEnabled {
+                tableContentHeight = tableView.contentSize.height
+            }
+        }
     }
 
     nonisolated private func performSplitInBackground(_  prevSections:  [MessagesSection], _ sections: [MessagesSection]) async -> SplitInfo {
