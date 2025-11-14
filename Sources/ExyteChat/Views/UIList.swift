@@ -452,6 +452,11 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
             
             print("[*ExyteChat*] sections: \(self.sections), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
             self.paginationTargetIndexPath = paginationTargetIndexPath
+            if paginationTargetIndexPath == nil {
+                if let lastSection = sections.last {
+                    self.paginationTargetIndexPath = IndexPath(row: lastSection.rows.count - 1, section: sections.count - 1)
+                }
+            }
             self.listSwipeActions = listSwipeActions
             self.keyboardDismissMode = keyboardDismissMode
         }
