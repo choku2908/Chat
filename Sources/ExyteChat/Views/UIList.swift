@@ -103,6 +103,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
 
     @MainActor
     private func updateIfNeeded(coordinator: Coordinator, tableView: UITableView) async {
+//        print("[*ExyteChat*] UIList updateIfNeeded called. sections: \(sections), coordinator.sections: \(coordinator.sections)")
         if coordinator.sections == sections {
             return
         }
@@ -191,22 +192,20 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
         UIView.setAnimationsEnabled(true)
         //print("3 finished edits", runID)
 
-        if isScrolledToBottom || isScrolledToTop {
-            // step 4: inserts
-            // apply the rest of the changes to table's dataSource, i.e. inserts
-            //print("4 apply inserts", runID)
-            updateContextClosure(sections)
+        // step 4: inserts
+        // apply the rest of the changes to table's dataSource, i.e. inserts
+        //print("4 apply inserts", runID)
+        updateContextClosure(sections)
 
-            tableView.beginUpdates()
-            for operation in splitInfo.insertOperations {
-                applyOperation(operation, tableView: tableView)
-            }
-            tableView.endUpdates()
-            //print("4 finished inserts", runID)
+        tableView.beginUpdates()
+        for operation in splitInfo.insertOperations {
+            applyOperation(operation, tableView: tableView)
+        }
+        tableView.endUpdates()
+        //print("4 finished inserts", runID)
 
-            if !isScrollEnabled {
-                tableContentHeight = tableView.contentSize.height
-            }
+        if !isScrollEnabled {
+            tableContentHeight = tableView.contentSize.height
         }
     }
 
@@ -448,7 +447,14 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
             self.sections = sections
             self.ids = ids
             self.mainBackgroundColor = mainBackgroundColor
+            
+//            print("[*ExyteChat*] sections: \(self.sections), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
             self.paginationTargetIndexPath = paginationTargetIndexPath
+            if paginationTargetIndexPath == nil {
+                if let lastSection = sections.last {
+                    self.paginationTargetIndexPath = IndexPath(row: lastSection.rows.count - 1, section: sections.count - 1)
+                }
+            }
             self.listSwipeActions = listSwipeActions
             self.keyboardDismissMode = keyboardDismissMode
         }
@@ -601,6 +607,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
         }
 
         func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//            print("[*ExyteChat*] paginationHandler: \(self.paginationHandler), paginationTargetIndexPath: \(self.paginationTargetIndexPath), indexPath: \(indexPath)")
             guard let paginationHandler = self.paginationHandler, let paginationTargetIndexPath, indexPath == paginationTargetIndexPath else {
                 return
             }
