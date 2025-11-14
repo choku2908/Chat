@@ -103,7 +103,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
 
     @MainActor
     private func updateIfNeeded(coordinator: Coordinator, tableView: UITableView) async {
-        print("[*ExyteChat*] UIList updateIfNeeded called. sections: \(sections), coordinator.sections: \(coordinator.sections)")
+//        print("[*ExyteChat*] UIList updateIfNeeded called. sections: \(sections), coordinator.sections: \(coordinator.sections)")
         if coordinator.sections == sections {
             return
         }
@@ -448,7 +448,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
             self.ids = ids
             self.mainBackgroundColor = mainBackgroundColor
             
-            print("[*ExyteChat*] sections: \(self.sections), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
+//            print("[*ExyteChat*] sections: \(self.sections), paginationTargetIndexPath: \(self.paginationTargetIndexPath), parameter: \(paginationTargetIndexPath)")
             self.paginationTargetIndexPath = paginationTargetIndexPath
             if paginationTargetIndexPath == nil {
                 if let lastSection = sections.last {
@@ -607,7 +607,7 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
         }
 
         func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-            print("[*ExyteChat*] paginationHandler: \(self.paginationHandler), paginationTargetIndexPath: \(self.paginationTargetIndexPath), indexPath: \(indexPath)")
+//            print("[*ExyteChat*] paginationHandler: \(self.paginationHandler), paginationTargetIndexPath: \(self.paginationTargetIndexPath), indexPath: \(indexPath)")
             guard let paginationHandler = self.paginationHandler, let paginationTargetIndexPath, indexPath == paginationTargetIndexPath else {
                 return
             }
