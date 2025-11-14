@@ -126,10 +126,12 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
         let prevSections = coordinator.sections
         //print("0 whole sections:", runID, "\n")
         //print("whole previous:\n", formatSections(prevSections), "\n")
-        let splitInfo = await performSplitInBackground(prevSections, sections)
-        await applyUpdatesToTable(tableView, splitInfo: splitInfo) {
-            coordinator.sections = $0
-        }
+//        let splitInfo = await performSplitInBackground(prevSections, sections)
+//        await applyUpdatesToTable(tableView, splitInfo: splitInfo) {
+//            coordinator.sections = $0
+//        }
+        tableView.reloadData()
+        coordinator.sections = sections
     }
 
     nonisolated private func performSplitInBackground(_  prevSections:  [MessagesSection], _ sections: [MessagesSection]) async -> SplitInfo {
