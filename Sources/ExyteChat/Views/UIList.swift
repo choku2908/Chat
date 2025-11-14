@@ -192,22 +192,20 @@ struct UIList<MessageContent: View, InputView: View>: UIViewRepresentable {
         UIView.setAnimationsEnabled(true)
         //print("3 finished edits", runID)
 
-        if isScrolledToBottom || isScrolledToTop {
-            // step 4: inserts
-            // apply the rest of the changes to table's dataSource, i.e. inserts
-            //print("4 apply inserts", runID)
-            updateContextClosure(sections)
+        // step 4: inserts
+        // apply the rest of the changes to table's dataSource, i.e. inserts
+        //print("4 apply inserts", runID)
+        updateContextClosure(sections)
 
-            tableView.beginUpdates()
-            for operation in splitInfo.insertOperations {
-                applyOperation(operation, tableView: tableView)
-            }
-            tableView.endUpdates()
-            //print("4 finished inserts", runID)
+        tableView.beginUpdates()
+        for operation in splitInfo.insertOperations {
+            applyOperation(operation, tableView: tableView)
+        }
+        tableView.endUpdates()
+        //print("4 finished inserts", runID)
 
-            if !isScrollEnabled {
-                tableContentHeight = tableView.contentSize.height
-            }
+        if !isScrollEnabled {
+            tableContentHeight = tableView.contentSize.height
         }
     }
 
